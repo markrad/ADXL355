@@ -15,11 +15,41 @@ RANGE_2G			= 0b01
 RANGE_4G			= 0b10
 RANGE_8G			= 0b11
 
+
+
 # Convenience class
 class ADXL355Range:
 	range2G = RANGE_2G
 	range4G = RANGE_4G
 	range8G = RANGE_8G
+	
+LOWPASS_FILTER      = 0x28
+LOWPASS_FILTER_MASK = 0x0F
+LOWPASS_FILTER_4000 = 0x0000
+LOWPASS_FILTER_2000 = 0x0000
+LOWPASS_FILTER_1000 = 0x0000
+LOWPASS_FILTER_500  = 0x0000
+LOWPASS_FILTER_250  = 0x0000
+LOWPASS_FILTER_125  = 0x0000
+LOWPASS_FILTER_62_5 = 0x0000
+LOWPASS_FILTER_31_25    = 0x0000
+LOWPASS_FILTER_15_625   = 0x0000
+LOWPASS_FILTER_7_813    = 0x0000
+LOWPASS_FILTER_3_906    = 0x0000
+
+class ADXL355LowpassFilter:
+	lowPassFilter_4000 = LOWPASS_FILTER_4000
+	lowPassFilter_2000 = LOWPASS_FILTER_2000
+	lowPassFilter_1000 = LOWPASS_FILTER_1000
+	lowPassFilter_500 = LOWPASS_FILTER_500
+	lowPassFilter_250 = LOWPASS_FILTER_250
+	lowPassFilter_125 = LOWPASS_FILTER_125
+	lowPassFilter_62_5 = LOWPASS_FILTER_62_5
+	lowPassFilter_31_25 = LOWPASS_FILTER_31_25
+	lowPassFilter_15_625 = LOWPASS_FILTER_15_625
+	lowPassFilter_7_813 = LOWPASS_FILTER_7_813
+	lowPassFilter_3_906 = LOWPASS_FILTER_3_906
+	
 
 XDATA3				= 0x08
 XDATA2				= 0x09
@@ -64,6 +94,20 @@ class ADXL355:
 
 		if (powerCtl & POWER_CTL_OFF) != POWER_CTL_OFF:
 			bus.write_byte_data(self._devAddr, POWER_CTL, powerCtl | POWER_CTL_OFF)
+			
+	def getLowpassFilter(self):
+		return (bus.read_byte_data(self._devAddr, LOWPASS_FILTER)) & LOWPASS_FILTER_MASK
+		
+	def setLowpassFilter(self, newLowpassFilter)
+		if type(newLowpassFilter) is not int:
+			raise ValueError('newLowpassFilter must be an integer')
+			
+		if newLowpassFilter < LOWPASS_FILTER_3_906 or newLowpassFilter > LOWPASS_FILTER_4000
+			raise ValueError('newLowpassFilter is out of range')
+			
+		lowpassFilter = bus.read_byte_data(self._devAddr, LOWPASS_FILTER)
+		lowpassFilter = (lowpassFilter & LOWPASS_FILTER_MASK) | newLowpassFilter
+		bus.write_byte_data(self._devAddr, LOWPASS_FILTER, lowpassFilter)
 		
 	def getRange(self):
 		return (bus.read_byte_data(self._devAddr, RANGE)) & RANGE_MASK
