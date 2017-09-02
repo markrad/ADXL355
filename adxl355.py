@@ -49,7 +49,20 @@ class ADXL355LowpassFilter:
     lowpassFilter_15_625 = LOWPASS_FILTER_15_625
     lowpassFilter_7_813 = LOWPASS_FILTER_7_813
     lowpassFilter_3_906 = LOWPASS_FILTER_3_906
-    
+    lowpassFilterValue = {
+        lowpassFilter_4000: '4000',
+        lowpassFilter_2000: '2000',
+        lowpassFilter_1000: '1000',
+        lowpassFilter_500: '500',
+        lowpassFilter_250: '250',
+        lowpassFilter_125: '125',
+        lowpassFilter_62_5: '62.5',
+        lowpassFilter_31_25: '31.25',
+        lowpassFilter_15_625: '15.625',
+        lowpassFilter_7_813: '7.813',
+        lowpassFilter_3_906: '3.906'
+    }
+
 
 XDATA3              = 0x08
 XDATA2              = 0x09
@@ -194,7 +207,7 @@ if __name__ == "__main__":
     
     print 'Set low pass filter to 62.5'
     adxl355.lowpassFilter = ADXL355LowpassFilter.lowpassFilter_62_5
-    print 'Low pass filter = %d' % adxl355.lowpassFilter
+    print 'Low pass filter = %d (%s)' % adxl355.lowpassFilter, ADXL355LowpassFilter.lowpassFilterValue[adxl355.lowpassFilter]
     
     print "Measuring? %r" % adxl355.isRunning
     print "Activate sensor"
