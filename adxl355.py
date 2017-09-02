@@ -194,7 +194,7 @@ if __name__ == "__main__":
     
     print 'Set low pass filter to 62.5'
     adxl355.lowpassFilter = ADXL355LowpassFilter.lowpassFilter_62_5
-    print 'Low pass filter = %d" % adxl355.lowpassFilter
+    print 'Low pass filter = %d' % adxl355.lowpassFilter
     
     print "Measuring? %r" % adxl355.isRunning
     print "Activate sensor"
