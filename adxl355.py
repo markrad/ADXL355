@@ -98,11 +98,11 @@ class ADXL355:
     def getLowpassFilter(self):
         return (bus.read_byte_data(self._devAddr, LOWPASS_FILTER)) & LOWPASS_FILTER_MASK
         
-    def setLowpassFilter(self, newLowpassFilter)
+    def setLowpassFilter(self, newLowpassFilter):
         if type(newLowpassFilter) is not int:
             raise ValueError('newLowpassFilter must be an integer')
             
-        if newLowpassFilter < LOWPASS_FILTER_3_906 or newLowpassFilter > LOWPASS_FILTER_4000
+        if newLowpassFilter < LOWPASS_FILTER_3_906 or newLowpassFilter > LOWPASS_FILTER_4000:
             raise ValueError('newLowpassFilter is out of range')
             
         lowpassFilter = bus.read_byte_data(self._devAddr, LOWPASS_FILTER)
